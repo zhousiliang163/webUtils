@@ -19,7 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcel {
 	
-	private static String _fileName="C:\\Users\\xiaozhou\\Desktop\\导出供应商数据20140417.xlsx";;
+	private static String _fileName="C:\\Users\\xiaozhou\\Desktop\\导出供应商数据20140417.xlsx";
 	public static void main(String[] args) {
 		ReadExcel.readXlsx(_fileName);
 	}
@@ -99,7 +99,7 @@ public class ReadExcel {
 				// 其语句为：HSSFSheet sheet = workbook.getSheetAt(0);
 				// 读取左上端单元
 				 int row_num=sheet.getLastRowNum()+1;
-				 for (int j = 0; j <= row_num; j++) {
+				 for (int j = 0; j < row_num; j++) {
 					   XSSFRow row = sheet.getRow(j);
 						int cell_num=row.getLastCellNum();
 						for (int k = 0; k < cell_num; k++) {
