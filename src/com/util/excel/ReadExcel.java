@@ -19,9 +19,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcel {
 	
-	private static String _fileName="C:\\Users\\xiaozhou\\Desktop\\导出供应商数据20140417.xlsx";
+	private static String _fileName="C:\\Users\\xiaozhou\\Desktop\\供应商资料0612.xls";
 	public static void main(String[] args) {
-		ReadExcel.readXlsx(_fileName);
+		ReadExcel.readXls(_fileName);
 	}
 	/**
 	 * read excel file
@@ -47,11 +47,16 @@ public class ReadExcel {
 				 int row_num=sheet.getLastRowNum()+1;
 				 for (int j = 0; j < row_num; j++) {
 					    HSSFRow row = sheet.getRow(j);
+					    if (row==null) {
+							continue;
+						}
 						int cell_num=row.getLastCellNum()+1;
 						for (int k = 0; k < cell_num; k++) {
 							 HSSFCell cell=row.getCell(k);
-							 
-							 System.out.print("左上端单元是： " + getValue(cell)+"     ;");
+							 if(j==2){
+								 
+								 System.out.print("左上端单元是： " + getValue(cell)+"     ;");
+							 }
 						}
 						System.out.println();
 						// 输出单元内容，cell.getStringCellValue()就是取所在单元的值
@@ -60,20 +65,61 @@ public class ReadExcel {
 			}
 			
 			}catch(Exception e) {
-			System.out.println("已运行xlRead() : " + e );
+				e.printStackTrace();
+			    System.out.println("已运行xlRead() : " + e );
 			}
 		
 	}
 	
+	/**
+	 * 读取供应商数据
+	 *
+	 * @author  xiaozhou   
+	 * @date 2014-6-23 上午10:50:19 
+	 * @param sheet
+	 */
+	public void readSupplier(HSSFSheet sheet) {
+			// 也可用getSheetAt(int index)按索引引用，
+			// 在Excel文档中，第一张工作表的缺省索引是0，
+			// 其语句为：HSSFSheet sheet = workbook.getSheetAt(0);
+			// 读取左上端单元
+			 int row_num=sheet.getLastRowNum()+1;
+			 for (int j = 0; j < row_num; j++) {
+				    HSSFRow row = sheet.getRow(j);
+				    if (row==null) {
+						continue;
+					}
+				    //生成供应商id
+				    String supplierId="";
+					int cell_num=row.getLastCellNum()+1;
+					for (int k = 0; k < cell_num; k++) {
+						 HSSFCell cell=row.getCell(k);
+						 if(j==2){
+							 
+							 System.out.print("左上端单元是： " + getValue(cell)+"     ;");
+						 }
+					}
+					System.out.println();
+					// 输出单元内容，cell.getStringCellValue()就是取所在单元的值
+			}
+		
+	}
+	
+	
 	  @SuppressWarnings("static-access")  
-	  private static String getValue(Cell cell){  
-	    if(cell.getCellType() == cell.CELL_TYPE_BOOLEAN){  
-	      return String.valueOf( cell.getBooleanCellValue());  
-	    }else if(cell.getCellType() == cell.CELL_TYPE_NUMERIC){  
-	      return String.valueOf( cell.getNumericCellValue());  
-	    }else{  
-	      return String.valueOf( cell.getStringCellValue());  
-	    }  
+	  private static String getValue(Cell cell){ 
+		  if(cell!=null){
+			  
+				  if(cell.getCellType() == cell.CELL_TYPE_BOOLEAN){  
+					  return String.valueOf( cell.getBooleanCellValue());  
+				  }else if(cell.getCellType() == cell.CELL_TYPE_NUMERIC){  
+					  return String.valueOf( cell.getNumericCellValue());  
+				  }else{  
+					  return String.valueOf( cell.getStringCellValue());  
+				  }  
+		  }else{
+			  return "";
+		  }
 	  }  
 	  
 
